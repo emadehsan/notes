@@ -108,23 +108,32 @@ Traceback (most recent call last):
 RuntimeError: dictionary changed size during iteration
 ```
 
-### Tuple
+### Initialization
+#### 1. Tuple vs Expression
 tuple, when initialized with a single value, should be defined as 
 ```py
 ab = (1,)
 
-# just doing the following will be evaluated to int
+# just doing the following are considered expressions that will be evaluated to int, float & bool
 ab = (1)
-# type(ab)
-# <class 'int'>
+cd = (2.0 + 4)
+ef = (False)
 
 # but following is still a tuple
-ab = () 
+ab = ()
 
 # so is
 ab = (1,2)
 ```
 
+#### 2. Dict vs Set
+```py
+# this is a dictionary
+a_dict = {}
+
+# but this is a set
+a_set = {1}
+```
 ### List Comprehensions
 
 #### 1. List vs Generator (not tuple)
