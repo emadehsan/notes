@@ -107,3 +107,83 @@ Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 RuntimeError: dictionary changed size during iteration
 ```
+
+### Tuple
+tuple, when initialized with a single value, should be defined as 
+```py
+ab = (1,)
+
+# just doing the following will be evaluated to int
+ab = (1)
+# type(ab)
+# <class 'int'>
+
+# but following is still a tuple
+ab = () 
+
+# so is
+ab = (1,2)
+```
+
+### List Comprehensions
+
+#### 1. List vs Generator (not tuple)
+```py
+# this returns a list
+a_list = [x * x for x in range(5)]
+# [0, 1, 4, 9, 16]
+
+# this returns a generator, not a tuple
+gen = (x * x for x in range(5))
+# <generator object <genexpr> at 0x1007e58a0>
+
+for item in gen:
+  print(item)
+```
+
+#### 2. Scopes
+```py
+x = 10
+squares = [x * x for x in range(5)] # this x is local to the list comprehension
+print(x)  # Outputs: 10
+```
+
+#### 3. Late binding in Closures
+When using functions inside list comprehensions that capture loop variables, all functions may capture the same (last) value due to late binding.
+
+```py
+funcs = [lambda: x for x in range(5)]
+results = [f() for f in funcs]
+print(results)  # Outputs: [4, 4, 4, 4, 4]
+
+# Solution: Use default arguments to capture the current value of x.
+funcs = [lambda x=x: x for x in range(5)]
+results = [f() for f in funcs]
+print(results)  # Outputs: [0, 1, 2, 3, 4]
+```
+
+#### 4. Order of Execution with Multiple Loops
+```py
+# The order of execution is equivalent to a nested for loop. The first loop is the outer loop, and the last/right loop is the innermost loop:
+>>> [x for x in range(5) for y in range(2)]
+[0, 0, 1, 1, 2, 2, 3, 3, 4, 4]
+
+# but here first loop is the inner loop, and the last/right loop is the outer loop:
+>>> [[x for x in range(5)] for y in range(2)]
+[[0, 1, 2, 3, 4], [0, 1, 2, 3, 4]]
+```
+
+#### 5. Misplacing the 'if' Clause
+
+```py
+# filtering in list comprehension: 
+[x for x in range(5) if x % 2 == 0]
+
+# incorrect syntax
+[x if x % 2 == 0 for x in range(5)]
+SyntaxError: expected 'else' after 'if' expression
+
+# but using as ternary operator is different
+[x if x % 2 == 0 else -x for x in range(5)]
+```
+
