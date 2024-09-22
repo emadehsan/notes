@@ -1,6 +1,4 @@
-# Notes on Data Structures and Algorithms
-
-## 14 Question Patterns
+# 14 Question Patterns
 The 14 coding patterns are some common problem types that appear in coding interviews. This is only a small subset of the questions that appear. Only treat these as a module to include in your preparation roadmap.
 
 ### 1. **Sliding Window**
